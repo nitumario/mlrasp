@@ -17,7 +17,7 @@ while(True):
 	datasave.write(x) #saves it to datafromclient.txt
 	datasave.close()
 	os.system("sudo bash main.sh")
-	tempfile = open("tempdata.txt", "w")
+	tempfile = open("tempdata.txt", "r")
 	tempdata = tempfile.readlines()
 	print("\n tempdata")
 	clientConnected.send(tempdata.encode())
