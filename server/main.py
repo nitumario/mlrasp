@@ -18,6 +18,6 @@ while(True):
 	datasave.close()
 	os.system("sudo bash main.sh")
 	tempfile = open("tempdata.txt", "r")
-	tempdata = string(tempfile.readlines())
+	tempdata = str(tempfile.readlines())
 	print("\n", tempdata)
 	clientConnected.send(tempdata.encode())
