@@ -5,7 +5,7 @@ atunci cand clientul contacteaza serverul, ii trimite uuidul, apoi acesta ii tri
 import os
 import socket
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serverSocket.bind(("127.0.0.1",9090))
+serverSocket.bind(("192.168.1.24",9090))
 serverSocket.listen()
 while(True):
 	(clientConnected, clientAddress) = serverSocket.accept()
