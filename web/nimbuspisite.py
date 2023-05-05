@@ -12,8 +12,8 @@ def my_link():
     #print ('I got clicked!')
     #print('you are uploading')
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientSocket.connect(("192.168.0.9",9090))
-    data = "sugi"
+    clientSocket.connect(("127.0.0.1",9090))
+    data = "buna server"
     clientSocket.send(data.encode())
     dataFromServer = clientSocket.recv(1024)
     return data
