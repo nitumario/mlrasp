@@ -7,18 +7,29 @@ import socket
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serverSocket.bind(("192.168.1.24",9090))
 serverSocket.listen()
-while(True):
-	(clientConnected, clientAddress) = serverSocket.accept()
-	print("Accepted a connection request from %s:%s"%(clientAddress[0], clientAddress[1]))
-	dataFromClient = clientConnected.recv(1024) #recieves the header
-	print(dataFromClient.decode())
-	x = dataFromClient.decode()
-	datasave = open("datafromclient.txt", "w")
-	datasave.write(x) #saves it to datafromclient.txt
-	datasave.close()
-	os.system("sudo bash main.sh")
-	tempfile = open("tempdata.txt", "r")
-	tempdata = " ".join(tempfile.readlines())
-	print("\n", tempdata)
-	clientConnected.send(tempdata.encode())
-	os.system("sudo rm tempdata.txt")
+while True:
+    (clientConnected, clientAddress) = serverSocket.accept()
+    print("Accepted a connection request from %s:%s" % (clientAddress[0], clientAddress[1]))
+    dataFromClient = clientConnected.recv(1024) #recieves the header
+    print(dataFromClient.decode())
+    x = dataFromClient.decode()
+    datasave = open("datafromclient.txt", "w")
+    datasave.write(x) #saves it to datafromclient.txt
+    datasave.close()
+    os.system("sudo bash main.sh")
+    tempfile = open("tempdata.txt", "r")
+    tempdata = " ".join(tempfile.readlines())
+    print("\n", tempdata)
+    clientConnected.send(tempdata.encode())
+    with open('tempdata.txt', 'r') as file:
+        lines = file.readlines()
+        fourth_line = lines[3]
+        user = fourth_line[-26:]
+        print("user is ", user)
+    with open('tempdata.txt', 'r') as file:
+        lines = file.readlines()
+        fifth_line = lines[4]
+        password = fifth_line[-26:]
+        print("pass is ", password)
+    os.system("sudo rm tempdata.txt")
+
