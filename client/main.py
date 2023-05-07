@@ -20,4 +20,17 @@ datasave.write("{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + 
 datasave.close
 clientSocket.send(data.encode()) #send the header
 dataFromServer = clientSocket.recv(1024)
-print(dataFromServer.decode())
+dataFromServer = dataFromServer.decode()
+datasave = open("header.txt", "w")
+datasave.write(dataFromServer)
+datasave.close
+print(dataFromServer)
+import paramiko
+ 
+with paramiko.SSHClient() as ssh:
+    ssh.load_system_host_keys()
+    ssh.connect("192.168.1.24", username="test", password="toor")
+ 
+    sftp = ssh.open_sftp()
+
+    sftp.chdir('/incoming')
