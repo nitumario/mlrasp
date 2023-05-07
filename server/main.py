@@ -30,7 +30,10 @@ while True:
 
         print("USR: ", usr)
         print("PASSWD: ", passwd)
-    os.system("sudo su; useradd -g sftp -d /upload -s /sbin/nologin " + usr)
+    os.system("sudo useradd -g sftp -d /upload -s /sbin/nologin " + usr)
+    os.system("passwd" + usr)
+    os.system(passwd)
+    os.system(passwd)
     with open("tempdata.txt", "r") as tempfile:
         tempdata = " ".join(tempfile.readlines())
         print("\n", tempdata)
