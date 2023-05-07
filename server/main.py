@@ -1,6 +1,6 @@
 import os
 import socket
-
+import subprocess
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind(("192.168.1.24", 9090))
 server_socket.listen()
@@ -30,10 +30,10 @@ while True:
 
         print("USR: ", usr)
         print("PASSWD: ", passwd)
-    os.system("sudo useradd -g sftp -d /upload -s /sbin/nologin " + usr)
-    os.system("passwd" + usr)
-    os.system(passwd)
-    os.system(passwd)
+    subprocess.run(['sudo', 'useradd', '-m', USR])
+    # Set the password
+    subprocess.run(['sudo', 'echo', f'{USR}:{PASSWD}', '|', 'sudo', 'chpasswd'])
+
     with open("tempdata.txt", "r") as tempfile:
         tempdata = " ".join(tempfile.readlines())
         print("\n", tempdata)
