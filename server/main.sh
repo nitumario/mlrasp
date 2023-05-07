@@ -1,5 +1,5 @@
 #!/bin/bash
-
+python3 cred.py
 # Read username and password from creds.txt
 usr=$(head -n 1 creds.txt)
 passwd=$(sed -n '2{p;q;}' creds.txt)
