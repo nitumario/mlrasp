@@ -30,9 +30,17 @@ while True:
 
         print("USR: ", usr)
         print("PASSWD: ", passwd)
-    subprocess.run(['sudo', 'useradd', '-m', USR])
-    # Set the password
-    subprocess.run(['sudo', 'echo', f'{USR}:{PASSWD}', '|', 'sudo', 'chpasswd'])
+    os.system(f"useradd -g sftp -d /upload -s /sbin/nologin {USR}")
+
+# Set user password
+    os.system(f"echo '{PASSWD}' | passwd {USR} --stdin")
+
+# Create necessary directories
+    os.makedirs(f"/data/{USR}/incoming", exist_ok=True)
+
+# Set directory ownership
+    os.system(f"chown -R root:sftp /data/{USR}")
+    os.system(f"chown -R {USR}:sftp /data/{USR}/incoming")
 
     with open("tempdata.txt", "r") as tempfile:
         tempdata = " ".join(tempfile.readlines())
