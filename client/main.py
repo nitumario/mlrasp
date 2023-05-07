@@ -3,34 +3,43 @@ import ftplib
 import os
 import uuid
 from datetime import datetime
-# datetime object containing current date and time
-now = datetime.now()
- 
-print("now =", now)
-
-# dd/mm/YY H:M:S
-dt_string = now.strftime("%d/%m/%Y %H:%M:%S") #get the time and date
-print('you are uploading')
-hostname=socket.gethostname()   
-clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-clientSocket.connect(("192.168.1.24",9090)) #connect to server
-data = "{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + str(uuid.uuid1()) +  "\n }" # creates the header
-datasave = open("header.txt", "w")
-datasave.write("{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + str(uuid.uuid1()) +  "\n }") #saves it in header.txt
-datasave.close
-clientSocket.send(data.encode()) #send the header
-dataFromServer = clientSocket.recv(1024)
-dataFromServer = dataFromServer.decode()
-datasave = open("header.txt", "w")
-datasave.write(dataFromServer)
-datasave.close
-print(dataFromServer)
 import paramiko
- 
+
+# Get the current date and time
+now = datetime.now()
+dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+print("You are uploading at", dt_string)
+
+# Get the hostname and create a socket
+hostname = socket.gethostname()
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket.connect(("192.168.1.24", 9090))  # Connect to server
+
+# Create the header data and save it to a file
+header_data = "{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + str(uuid.uuid4()) + "\n}"
+with open("header.txt", "w") as datasave:
+    datasave.write(header_data)
+
+# Send the header to the server and receive a response
+client_socket.send(header_data.encode())
+data_from_server = client_socket.recv(1024).decode()
+
+# Save the response to a file and print it
+with open("header_response.txt", "w") as datasave:
+    datasave.write(data_from_server)
+print(data_from_server)
+
+# Get the USR and PASSWD values from the header response
+with open("header_response.txt", "r") as header_file:
+    header = header_file.read()
+    usr = header.split("USR: ")[1].split("\n")[0]
+    passwd = header.split("PASSWD: ")[1].split("\n")[0]
+print("USR:", usr)
+print("PASSWD:", passwd)
+
+# Connect to the server using SSH and SFTP
 with paramiko.SSHClient() as ssh:
     ssh.load_system_host_keys()
-    ssh.connect("192.168.1.24", username="test", password="toor")
- 
+    ssh.connect("192.168.1.24", username=usr, password=passwd)
     sftp = ssh.open_sftp()
-
     sftp.chdir('/incoming')

@@ -1,35 +1,25 @@
-"""
-atunci cand clientul contacteaza serverul, ii trimite uuidul, apoi acesta ii trimite user&parola, clientul urmand sa uploadeze fisierele in ftp
-"""
-
 import os
 import socket
-serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serverSocket.bind(("192.168.1.24",9090))
-serverSocket.listen()
-while True:
-    (clientConnected, clientAddress) = serverSocket.accept()
-    print("Accepted a connection request from %s:%s" % (clientAddress[0], clientAddress[1]))
-    dataFromClient = clientConnected.recv(1024) #recieves the header
-    print(dataFromClient.decode())
-    x = dataFromClient.decode()
-    datasave = open("datafromclient.txt", "w")
-    datasave.write(x) #saves it to datafromclient.txt
-    datasave.close()
-    os.system("sudo bash main.sh")
-    tempfile = open("tempdata.txt", "r")
-    tempdata = " ".join(tempfile.readlines())
-    print("\n", tempdata)
-    clientConnected.send(tempdata.encode())
-    with open('tempdata.txt', 'r') as file:
-        lines = file.readlines()
-        fourth_line = lines[3]
-        user = fourth_line[-26:]
-        print("user is ", user)
-    with open('tempdata.txt', 'r') as file:
-        lines = file.readlines()
-        fifth_line = lines[4]
-        password = fifth_line[-26:]
-        print("pass is ", password)
-    os.system("sudo rm tempdata.txt")
 
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.bind(("192.168.1.24", 9090))
+server_socket.listen()
+
+while True:
+    (client_connected, client_address) = server_socket.accept()
+    print("Accepted a connection request from %s:%s" % (client_address[0], client_address[1]))
+    
+    # Receives the header
+    data_from_client = client_connected.recv(1024)
+    print(data_from_client.decode())
+    
+    # Saves it to datafromclient.txt
+    with open("datafromclient.txt", "w") as datasave:
+        datasave.write(data_from_client.decode())
+    
+    os.system("sudo bash main.sh")
+    
+    with open("tempdata.txt", "r") as tempfile:
+        tempdata = " ".join(tempfile.readlines())
+        print("\n", tempdata)
+        client_connected.send(tempdata.encode())
