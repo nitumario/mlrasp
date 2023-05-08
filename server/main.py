@@ -28,8 +28,8 @@ def creds():
         ip = lines[1].strip()
         uuid = lines[-2].strip()
 
-    print(f'IP: {ip}')
-    print(f'UUID: {uuid}')
+    # print(f'IP: {ip}')
+    # print(f'UUID: {uuid}')
 
     # Remove input files
     os.remove("datafromclient.txt")
@@ -46,9 +46,7 @@ def creds():
 
 def handle_client(client_connected):
     # Receives the header
-    data_from_client = client_connected.recv(1024)
-    print(data_from_client.decode())    
-    
+    data_from_client = client_connected.recv(1024)    
     # Saves it to datafromclient.txt
     with open("datafromclient.txt", "w") as datasave:
         datasave.write(data_from_client.decode())

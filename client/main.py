@@ -34,8 +34,9 @@ with open("header_response.txt", "r") as header_file:
     header = header_file.read()
     usr = header.split("USR: ")[1].split("\n")[0]
     passwd = header.split("PASSWD: ")[1].split("\n")[0]
-print("USR:", usr)
-print("PASSWD:", passwd)
+    usr = usr.strip()
+    passwd = passwd.strip()
+os.system("sudo rm header_response.txt")
 
 # Connect to the server using SSH and SFTP
 with paramiko.SSHClient() as ssh:
