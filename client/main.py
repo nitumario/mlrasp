@@ -40,7 +40,9 @@ os.system("sudo rm header_response.txt")
 
 # Connect to the server using SSH and SFTP
 with paramiko.SSHClient() as ssh:
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.load_system_host_keys()
     ssh.connect("192.168.1.24", username=usr, password=passwd)
     sftp = ssh.open_sftp()
     sftp.chdir('/incoming')
+    sftp.put("/home/mario/kms.txt", "/incoming")
