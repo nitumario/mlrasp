@@ -23,24 +23,27 @@ while True:
         data = f.read()
         usr_start = data.find("USR: ") + 5
         usr_end = data.find("\n", usr_start)
-        usr = data[usr_start:usr_end]
+        USR  = data[usr_start:usr_end]
         passwd_start = data.find("PASSWD: ") + 8
         passwd_end = data.find("\n", passwd_start)
-        passwd = data[passwd_start:passwd_end]
+        PASSWD = data[passwd_start:passwd_end]
 
-        print("USR: ", usr)
-        print("PASSWD: ", passwd)
-    os.system(f"useradd -g sftp -d /upload -s /sbin/nologin {USR}")
+        print("USR: ", USR)
+        print("PASSWD: ", PASSWD)
+        USR = USR.strip()
+        PASSWD = PASSWD.strip()
+    # create user and set home directory to /upload and login shell to /sbin/nologin
+    subprocess.run(["useradd", "-g", "sftp", "-d", "/incoming", "-s", "/sbin/nologin", USR])
 
-# Set user password
-    os.system(f"echo '{PASSWD}' | passwd {USR} --stdin")
+# set the password for the user
+    proc = subprocess.Popen(["passwd", USR], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    proc.stdin.write(f"{PASSWD}\n{PASSWD}\n".encode())
+    proc.communicate()
 
-# Create necessary directories
-    os.makedirs(f"/data/{USR}/incoming", exist_ok=True)
-
-# Set directory ownership
-    os.system(f"chown -R root:sftp /data/{USR}")
-    os.system(f"chown -R {USR}:sftp /data/{USR}/incoming")
+# create incoming directory and set permissions
+    subprocess.run(["mkdir", "-p", f"/data/{USR}/incoming"])
+    subprocess.run(["chown", "-R", "root:sftp", f"/data/{USR}"])
+    subprocess.run(["chown", "-R", f"{USR}:sftp", f"/data/{USR}/incoming"])
 
     with open("tempdata.txt", "r") as tempfile:
         tempdata = " ".join(tempfile.readlines())
