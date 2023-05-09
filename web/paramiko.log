@@ -1,0 +1,35 @@
+DEB [20230506-20:02:07.061] thr=1   paramiko.transport: starting thread (client mode): 0xbcebf5b0
+DEB [20230506-20:02:07.062] thr=1   paramiko.transport: Local version/idstring: SSH-2.0-paramiko_3.1.0
+DEB [20230506-20:02:07.063] thr=1   paramiko.transport: Banner: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+DEB [20230506-20:02:07.063] thr=1   paramiko.transport: Banner:         "http://www.w3.org/TR/html4/strict.dtd">
+DEB [20230506-20:02:07.063] thr=1   paramiko.transport: Banner: <html>
+DEB [20230506-20:02:07.063] thr=1   paramiko.transport: Banner:     <head>
+DEB [20230506-20:02:07.063] thr=1   paramiko.transport: Banner:         <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner:         <title>Error response</title>
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner:     </head>
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner:     <body>
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner:         <h1>Error response</h1>
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner:         <p>Error code: 400</p>
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner:         <p>Message: Bad request syntax ('SSH-2.0-paramiko_3.1.0').</p>
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner:         <p>Error code explanation: HTTPStatus.BAD_REQUEST - Bad request syntax or unsupported method.</p>
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner:     </body>
+DEB [20230506-20:02:07.064] thr=1   paramiko.transport: Banner: </html>
+ERR [20230506-20:02:07.065] thr=1   paramiko.transport: Exception (client): Error reading SSH protocol banner
+ERR [20230506-20:02:07.066] thr=1   paramiko.transport: Traceback (most recent call last):
+ERR [20230506-20:02:07.067] thr=1   paramiko.transport:   File "C:\Users\vlada\AppData\Local\python\mu\mu_venv-38-20211015-191912\lib\site-packages\paramiko\transport.py", line 2270, in _check_banner
+ERR [20230506-20:02:07.067] thr=1   paramiko.transport:     buf = self.packetizer.readline(timeout)
+ERR [20230506-20:02:07.067] thr=1   paramiko.transport:   File "C:\Users\vlada\AppData\Local\python\mu\mu_venv-38-20211015-191912\lib\site-packages\paramiko\packet.py", line 374, in readline
+ERR [20230506-20:02:07.067] thr=1   paramiko.transport:     buf += self._read_timeout(timeout)
+ERR [20230506-20:02:07.067] thr=1   paramiko.transport:   File "C:\Users\vlada\AppData\Local\python\mu\mu_venv-38-20211015-191912\lib\site-packages\paramiko\packet.py", line 603, in _read_timeout
+ERR [20230506-20:02:07.067] thr=1   paramiko.transport:     raise EOFError()
+ERR [20230506-20:02:07.067] thr=1   paramiko.transport: EOFError
+ERR [20230506-20:02:07.067] thr=1   paramiko.transport: 
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport: During handling of the above exception, another exception occurred:
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport: 
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport: Traceback (most recent call last):
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport:   File "C:\Users\vlada\AppData\Local\python\mu\mu_venv-38-20211015-191912\lib\site-packages\paramiko\transport.py", line 2093, in run
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport:     self._check_banner()
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport:   File "C:\Users\vlada\AppData\Local\python\mu\mu_venv-38-20211015-191912\lib\site-packages\paramiko\transport.py", line 2274, in _check_banner
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport:     raise SSHException(
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport: paramiko.ssh_exception.SSHException: Error reading SSH protocol banner
+ERR [20230506-20:02:07.068] thr=1   paramiko.transport: 

@@ -13,7 +13,7 @@ print("You are uploading at", dt_string)
 # Get the hostname and create a socket
 hostname = socket.gethostname()
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(("192.168.1.24", 9090))  # Connect to server
+client_socket.connect(("192.168.33.116", 9090))  # Connect to server
 
 # Create the header data and save it to a file
 header_data = "{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + str(uuid.uuid4()) + "\n}"
