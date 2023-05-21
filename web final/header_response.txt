@@ -1,0 +1,7 @@
+{ 
+  UUID: ae5f7ff0-1356-4fb5-a31b-c764a65004c3 
+  IP: 192.168.33.196 
+  USR: lfqsdob2ssmukv20jussmyz7 
+  PASSWD: 9x2bnhc1wc6bg2kzd6ieinmp 
+  DATE: 2023-05-21 18:29:15.586173 
+  }, 
