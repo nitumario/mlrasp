@@ -1,0 +1,25 @@
+Status: active
+
+To                         Action      From
+--                         ------      ----
+20/tcp                     ALLOW       Anywhere                  
+21/tcp                     ALLOW       Anywhere                  
+22/tcp                     ALLOW       Anywhere                  
+9090                       ALLOW       Anywhere                  
+20/tcp (v6)                ALLOW       Anywhere (v6)             
+21/tcp (v6)                ALLOW       Anywhere (v6)             
+22/tcp (v6)                ALLOW       Anywhere (v6)             
+9090 (v6)                  ALLOW       Anywhere (v6)             
+
+Starting the initialisation phase. 
+
+Traceback (most recent call last):
+  File "/home/nimbus-pi/mlrasp/server/main.py", line 93, in <module>
+    start_server("192.168.1.24", 9090)
+  File "/home/nimbus-pi/mlrasp/server/main.py", line 84, in start_server
+    (client_connected, client_address) = server_socket.accept()
+                                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 294, in accept
+    fd, addr = self._accept()
+               ^^^^^^^^^^^^^^
+KeyboardInterrupt

@@ -1,15 +1,18 @@
-from flask import Flask, request, render_template, redirect, url_for, send_from_directory, send_file, g
+from flask import Flask, request, render_template, send_file
 import paramiko
 import ftplib
 import os
 import uuid
+import random
 from datetime import datetime
 import socket
 from io import BytesIO
 from tempfile import SpooledTemporaryFile
-import sqlite
-ip = "192.168.33.116"
-con = sqlite3.connect("users.sql")  
+import sqlite3
+
+ip = "192.168.1.24"
+db_file = "users.db"  # SQLite database file name
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -23,12 +26,12 @@ def success():
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     print("You are uploading at", dt_string)
 
-# Get the hostname and create a socket
+    # Get the hostname and create a socket
     hostname = socket.gethostname()
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((ip, 9090))  # Connect to server
 
-# Create the header data and save it to a file
+    # Create the header data and save it to a file
     header_data = "{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + str(uuid.uuid4()) + "\n}"
     with open("header.txt", "w") as datasave:
         datasave.write(header_data)
@@ -52,10 +55,24 @@ def success():
     os.system("sudo rm header_response.txt")
     os.system("sudo rm header.txt")
 
+    # Generate a random 6-digit code
+    code = str(random.randint(100000, 999999))
+
+    # Create a new SQLite connection and cursor
+    con = sqlite3.connect(db_file)
+    cursor = con.cursor()
+
+    # Create the users table if it doesn't exist
+    cursor.execute("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT, code TEXT)")
+
+    # Insert user information into the database
+    cursor.execute("INSERT INTO users (username, password, code) VALUES (?, ?, ?)", (usr, passwd, code))
+    con.commit()
+
     # Create a Paramiko SSH client
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(ip, username="pz83rjlkdeh3em5ld3fw12d7", password="pula")
+    ssh.connect(ip, username=usr, password=passwd)
 
     # Create an SFTP client from the SSH client
     sftp = ssh.open_sftp()
@@ -65,16 +82,19 @@ def success():
         filename = uploaded_file.filename
         sftp.putfo(uploaded_file, '/incoming/' + filename)
 
-    return render_template('succes.html')
-
     sftp.close()
     ssh.close()
+
+    con.close()  # Close the SQLite connection
+
+    return render_template('success.html')
+
 @app.route('/view')
 def view_files():
     try:
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(ip, username="pz83rjlkdeh3em5ld3fw12d7", password="pula")
+        ssh.connect(ip, username=usr, password=passwd)
 
         # Create an SFTP client from the SSH client
         sftp = ssh.open_sftp()
@@ -102,18 +122,15 @@ def view_files():
 
 @app.route('/incoming/<path:file_path>')
 def download_file(file_path):
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(ip, username="pz83rjlkdeh3em5ld3fw12d7", password="pula")
-    transport = client.open_sftp()
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(ip, username=usr, password=passwd)
+    transport = ssh.open_sftp()
 
     with SpooledTemporaryFile(1024000) as f:
         transport.get(file_path, os.path.basename(file_path))
         f.seek(0)
         return send_file(os.path.basename(file_path), as_attachment=True)
-
-
-
 
 
 if __name__ == '__main__':
