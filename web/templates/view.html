@@ -25,16 +25,26 @@
   <body>
     <div class="container">
       <div class="d-flex flex-column align-items-center">
-        <h1 class="mt-5">View Uploaded Files</h1>
-        <p class="mt-3">Click on a file to download:</p>
+        <h1>View Uploaded Files</h1>
+        <p>Click on a file to download:</p>
         <ul>
           {% for file_info in file_info %}
-          <li>
-            <a href="{{ file_info['file_path'] }}">{{ file_info['file'] }}</a>
-          </li>
+            <li>
+              <a href="{{ file_info['file_path'] }}">{{ file_info['file'] }}</a>
+            </li>
           {% endfor %}
         </ul>
         <a class="btn btn-primary mt-3" href="/" role="button">Upload More Files</a>
+      </div>
+      <div class="d-flex flex-column align-items-center mt-5">
+        <h2>Enter Code to View Files:</h2>
+        <form method="post" action="{{ url_for('view_files') }}">
+          <div class="form-group">
+            <label for="code">Code:</label>
+            <input type="text" name="code" id="code" required>
+          </div>
+          <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
       </div>
     </div>
     <!-- Bootstrap JS -->
