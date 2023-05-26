@@ -158,7 +158,12 @@ def view():
         if ssh:
             ssh.close()
 
-        return render_template('view.html', file_info=file_info)
+    sort_param = request.args.get('sort')
+    if sort_param == 'true':
+        return "miaumiaupispis"
+
+    return render_template('view.html', file_info=file_info)
+
 
 @app.route('/incoming/<path:file_path>')
 def download_file(file_path):
