@@ -20,6 +20,20 @@
         flex-direction: column;
         height: 100vh;
       }
+      .sort-btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+      }
+      .countdown {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 72px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -47,9 +61,30 @@
         </form>
       </div>
     </div>
+    <button class="btn btn-primary sort-btn" onclick="sortFiles()">Sort Files</button>
+    <div id="countdown" class="countdown"></div>
     <!-- Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+      var countdownFontSize = 500; // Change this value to modify the dimension of the countdown text
+
+      function sortFiles() {
+        var countdown = document.getElementById('countdown');
+        countdown.style.fontSize = countdownFontSize + 'px';
+        countdown.innerText = '5';
+        var count = 5;
+        var timer = setInterval(function() {
+          count--;
+          countdown.innerText = count.toString();
+          if (count === 0) {
+            clearInterval(timer);
+            countdown.innerText = '';
+            location.reload();
+          }
+        }, 1000);
+      }
+    </script>
   </body>
 </html>
