@@ -68,23 +68,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
-      var countdownFontSize = 500; // Change this value to modify the dimension of the countdown text
 
-      function sortFiles() {
-        var countdown = document.getElementById('countdown');
-        countdown.style.fontSize = countdownFontSize + 'px';
-        countdown.innerText = '5';
-        var count = 5;
-        var timer = setInterval(function() {
-          count--;
-          countdown.innerText = count.toString();
-          if (count === 0) {
-            clearInterval(timer);
-            countdown.innerText = '';
-            window.location.href = "/view?sort=true"; // Redirect to the Flask route with the sort parameter set to true
-          }
-        }, 1000);
-      }
+var countdownFontSize = 500; // Change this value to modify the dimension of the countdown text
+
+var isButtonPressed = 0; // Global variable to track button press status
+
+function sortFiles() {
+  var countdown = document.getElementById('countdown');
+  countdown.style.fontSize = countdownFontSize + 'px';
+  countdown.innerText = '5';
+  var count = 5;
+  var timer = setInterval(function() {
+    count--;
+    countdown.innerText = count.toString();
+    if (count === 0) {
+      clearInterval(timer);
+      countdown.innerText = '';
+      var url = "/view?sort=" + isButtonPressed.toString(); // Construct the URL with the isButtonPressed variable
+      window.location.href = url; // Redirect to the constructed URL
+    }
+  }, 1000);
+}
+
+// Event listener for button press
+var sortBtn = document.querySelector('.sort-btn');
+sortBtn.addEventListener('click', function() {
+  isButtonPressed = 1; // Set the variable to 1 when the button is pressed
+});
+
+
     </script>
   </body>
 </html>
