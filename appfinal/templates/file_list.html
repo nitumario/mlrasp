@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File List</title>
+</head>
+<body>
+    <h1>File List</h1>
+    <h2>Current Path: {{ current_path }}</h2>
+    <ul>
+    {% for file_name in file_list %}
+        {% if file_name.endswith('/') %}
+            {% set folder_name = file_name[:-1] %}
+            <li><strong>Files in {{ folder_name }}:</strong></li>
+        {% else %}
+            <li><a href="/incoming/{{ current_path }}/{{ file_name }}">{{ file_name }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</body>
+</html>

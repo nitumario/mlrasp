@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Main Menu</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+      body {
+        background-color: #539165;
+      }
+      .btn-primary {
+        background-color: #3F497F;
+        border-color: #3F497F;
+        color: #F7C04A;
+        transition: background-color 0.3s ease-in-out;
+        background-image: linear-gradient(#3F497F, #495489);
+      }
+      .btn-primary:hover {
+        background-image: linear-gradient(#3F497F, #3F497F);
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+      h1 {
+        color: #3F497F;
+        font-weight: bold;
+      }
+      #fileUploadForm:hover {
+        opacity: 0.8;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .form-group label {
+        color: #3F497F;
+      }
+      .form-group input[type="file"] {
+        color: #3F497F;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="d-flex flex-column align-items-center">
+        <h1 class="mt-5">Upload files to SFTP</h1>
+        <a class="btn btn-primary mt-3" href="/upload" role="button" id="uploadButton">Select Files to Upload</a>
+        <a class="btn btn-primary mt-3" href="/view" role="button" id="viewButton">View Uploaded Files</a>
+      </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

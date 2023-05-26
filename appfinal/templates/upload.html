@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Upload</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+      body {
+        background-color: #539165;
+      }
+      .btn-primary {
+        background-color: #3F497F;
+        border-color: #3F497F;
+        color: #F7C04A;
+        transition: background-color 0.3s ease-in-out;
+        background-image: linear-gradient(#3F497F, #495489);
+      }
+      .btn-primary:hover {
+        background-image: linear-gradient(#3F497F, #3F497F);
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+      }
+      h1 {
+        color: #3F497F;
+        font-weight: bold;
+      }
+      #fileUploadForm:hover {
+        opacity: 0.8;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .back-button {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="d-flex flex-column align-items-center">
+        <h1 class="mt-5">File Upload</h1>
+        <form action="{{ url_for('success') }}" method="POST" enctype="multipart/form-data" class="mt-3" id="fileUploadForm">
+          <div class="form-group">
+            <label for="files">Choose files:</label>
+            <input type="file" name="file" multiple>
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+      </div>
+      <a class="btn btn-primary mt-3 back-button" href="/">Back</a>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

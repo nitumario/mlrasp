@@ -1,0 +1,17 @@
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.file-list li {
+  flex-basis: calc(50% - 10px);
+  margin-bottom: 10px;
+}
+
+.folder-list {
+  margin-left: 0;
+}
