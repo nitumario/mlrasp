@@ -145,6 +145,12 @@ def view():
         else:
             app.logger.info('Invalid code: {}'.format(code))
             print('Code is invalid')
+
+        # Check if the sort parameter is present in the request URL
+        sort_param = request.args.get('sort')
+        if sort_param == '1':
+            #Doar in functia asta poti modifica pentru ML deoarece comunica cu butonul in html
+
     except Exception as e:
         app.logger.error('An error occurred: {}'.format(str(e)))
         # Handle the error and return an appropriate response
@@ -158,11 +164,7 @@ def view():
         if ssh:
             ssh.close()
 
-    sort_param = request.args.get('sort')
-    if sort_param == 'true':
-        return "miaumiaupispis"
-
-    return render_template('view.html', file_info=file_info)
+        return render_template('view.html', file_info=file_info)
 
 
 @app.route('/incoming/<path:file_path>')
