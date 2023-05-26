@@ -81,7 +81,7 @@
           if (count === 0) {
             clearInterval(timer);
             countdown.innerText = '';
-            location.reload();
+            window.location.href = "/view?sort=true"; // Redirect to the Flask route with the sort parameter set to true
           }
         }, 1000);
       }
