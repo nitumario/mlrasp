@@ -6,11 +6,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
       body {
-        background-color: #A0D8B3;
+        background-color: #000000;
+        color: #FFFFFF;
       }
-      .btn-primary, .btn-primary:focus, .btn-primary:hover {
-        background-color: #FFD95A;
-        border-color: #FFD95A;
+      .btn-primary,
+      .btn-primary:focus,
+      .btn-primary:hover {
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
         color: #000000;
       }
       .container {
@@ -19,6 +22,21 @@
         align-items: center;
         flex-direction: column;
         height: 100vh;
+      }
+      h1 {
+        color: #FFFFFF;
+        font-weight: bold;
+      }
+      #uploadButton:hover,
+      #viewButton:hover {
+        opacity: 0.8;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .form-group label {
+        color: #DDDDDD;
+      }
+      .form-group input[type="file"] {
+        color: #DDDDDD;
       }
     </style>
   </head>
@@ -29,7 +47,7 @@
         <p>Your code is: {{ code }}</p>
         <p class="mt-3">Your files have been successfully uploaded to the server.</p>
         <a class="btn btn-primary mt-3" href="/upload" role="button">Upload More Files</a>
-        <a class="btn btn-primary mt-3" href="/" role="button">Main menu</a>
+        <a class="btn btn-primary mt-3" href="/" role="button">Main Menu</a>
       </div>
     </div>
     <!-- Bootstrap JS -->
