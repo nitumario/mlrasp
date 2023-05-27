@@ -1,7 +1,0 @@
-{ 
-  UUID: 96c5e4b8-ec89-4f36-bda4-ec561c91103c 
-  IP: 192.168.183.196 
-  USR: a0z0eb1ku3fldmqsbef0bacs 
-  PASSWD: 4pl3t0axlpmcn480p5lcy3ai 
-  DATE: 2023-05-26 03:25:06.589944 
-  }, 

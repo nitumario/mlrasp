@@ -2,6 +2,7 @@ import argparse
 import os
 import time
 import imghdr
+import shutil
 
 import numpy as np
 from PIL import Image
@@ -57,9 +58,11 @@ def classify_images(folder_path):
             output_folder_path = os.path.join(folder_path, output_folder)
             os.makedirs(output_folder_path, exist_ok=True)
             output_file_path = os.path.join(output_folder_path, file_name)
-            image.save(output_file_path)
 
-            print(f'Saved {file_name} in {output_folder} folder.')
+            # Move the file instead of copying
+            shutil.move(file_path, output_file_path)
+
+            print(f'Moved {file_name} to {output_folder} folder.')
 
 
 def main():

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_file, safe_join, make_response
+from flask import Flask, request, render_template, send_file, make_response
 import paramiko
 import os
 import uuid
@@ -146,10 +146,13 @@ def view():
             app.logger.info('Invalid code: {}'.format(code))
             print('Code is invalid')
 
-        # Check if the sort parameter is present in the request URL
         sort_param = request.args.get('sort')
         if sort_param == '1':
-            #Doar in functia asta poti modifica pentru ML deoarece comunica cu butonul in html
+            print('started')
+            print(username)
+            os.system("python3 /home/nimbus-pi/mlrasp/server/ml/classify_image.py -f /data/" + username + "/incoming")
+            print('finished')
+
 
     except Exception as e:
         app.logger.error('An error occurred: {}'.format(str(e)))
