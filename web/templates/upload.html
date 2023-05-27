@@ -6,17 +6,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
       body {
-        background-color: #539165;
+        background-color: #FFFFFF;
+        color: #000000;
       }
       .btn-primary {
-        background-color: #3F497F;
-        border-color: #3F497F;
-        color: #F7C04A;
+        background-color: #000000;
+        border-color: #000000;
+        color: #FFFFFF;
         transition: background-color 0.3s ease-in-out;
-        background-image: linear-gradient(#3F497F, #495489);
+        background-image: linear-gradient(#000000, #333333);
       }
       .btn-primary:hover {
-        background-image: linear-gradient(#3F497F, #3F497F);
+        background-image: linear-gradient(#000000, #000000);
       }
       .container {
         display: flex;
@@ -26,7 +27,7 @@
         height: 100vh;
       }
       h1 {
-        color: #3F497F;
+        color: #000000;
         font-weight: bold;
       }
       #fileUploadForm:hover {
@@ -34,7 +35,14 @@
         transition: opacity 0.3s ease-in-out;
       }
       .back-button {
-        margin-top: 20px;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+      .refresh-button {
+        position: fixed;
+        bottom: 269px;
+        margin-right: 120px;
       }
     </style>
   </head>
@@ -49,6 +57,7 @@
           </div>
           <button type="submit" class="btn btn-primary">Upload</button>
         </form>
+        <button class="btn btn-primary refresh-button" onclick="location.reload()">Retry</button>
       </div>
       <a class="btn btn-primary mt-3 back-button" href="/">Back</a>
     </div>
