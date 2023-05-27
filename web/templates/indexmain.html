@@ -6,17 +6,21 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
       body {
-        background-color: #539165;
+        background-color: #000000;
+        color: #FFFFFF;
+        font-family: 'Libre Franklin', sans-serif;
       }
       .btn-primary {
-        background-color: #3F497F;
-        border-color: #3F497F;
-        color: #F7C04A;
+        background-color: #FFFFFF; /* Change the background color to gray */
+        border-color: #FFFFFF; /* Change the border color to gray */
+        color: #000000;
         transition: background-color 0.3s ease-in-out;
-        background-image: linear-gradient(#3F497F, #495489);
+        font-family: 'Libre Franklin', sans-serif;
+        opacity: 1;
       }
       .btn-primary:hover {
-        background-image: linear-gradient(#3F497F, #3F497F);
+        background-color: #DDDDDD; /* Change the background color on hover to gray */
+        color: #000000;
       }
       .container {
         display: flex;
@@ -26,23 +30,32 @@
         height: 100vh;
       }
       h1 {
-        color: #3F497F;
+        color: #FFFFFF;
         font-weight: bold;
-      }
-      #fileUploadForm:hover {
-        opacity: 0.8;
-        transition: opacity 0.3s ease-in-out;
+        font-family: 'Libre Franklin', sans-serif;
       }
       .form-group label {
-        color: #3F497F;
+        color: #DDDDDD;
       }
       .form-group input[type="file"] {
-        color: #3F497F;
+        color: #DDDDDD;
+      }
+      .contact-info {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: bold;
+        font-family: 'Libre Franklin', sans-serif;
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <div class="contact-info">
+        <p>Contact: <a href="mailto:server.nimbuspi@gmail.com">server.nimbuspi@gmail.com</a></p>
+      </div>
       <div class="d-flex flex-column align-items-center">
         <h1 class="mt-5">Upload files to SFTP</h1>
         <a class="btn btn-primary mt-3" href="/upload" role="button" id="uploadButton">Select Files to Upload</a>
