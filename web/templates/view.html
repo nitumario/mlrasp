@@ -6,11 +6,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
       body {
-        background-color: #A0D8B3;
+        background-color: #000000;
+        color: #FFFFFF;
       }
       .btn-primary, .btn-primary:focus, .btn-primary:hover {
-        background-color: #FFD95A;
-        border-color: #FFD95A;
+        background-color: #FFFFFF;
+        border-color: #FFFFFF;
         color: #000000;
       }
       .container {
@@ -19,11 +20,23 @@
         align-items: center;
         flex-direction: column;
         height: 100vh;
+        position: relative;
+      }
+      .container .upload-btn{
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .back-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
       }
       .sort-btn {
-        position: absolute;
-        top: 10px;
-        left: 10px;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
         z-index: 999;
       }
       .countdown {
@@ -34,22 +47,41 @@
         font-size: 72px;
         font-weight: bold;
       }
+      h1, h2, p {
+        color: #FFFFFF;
+        text-align: center;
+      }
+      label {
+        color: #999999;
+        text-align: center;
+      }
+      input[type="text"] {
+        color: #000000;
+        text-align: center;
+      }
+      #fileList {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .upload-btn {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     </style>
   </head>
   <body>
+    <a class="btn btn-primary mt-3 back-button" href="/">Back</a>
     <div class="container">
-      <div class="d-flex flex-column align-items-center">
-        <h1>View Uploaded Files</h1>
-        <p>Click on a file to view or download:</p>
-        <ul id="fileList">
-          {% for file_info in file_info %}
-            <li>
-              <a href="{{ file_info['file_path'] }}" class="file" data-path="{{ file_info['file_path'] }}">{{ file_info['file_path'] }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-        <a class="btn btn-primary mt-3" href="/" role="button">Upload More Files</a>
-      </div>
+      <ul id="fileList">
+        {% for file_info in file_info %}
+        <li>
+          <a href="{{ file_info['file_path'] }}" class="file" data-path="{{ file_info['file_path'] }}">{{ file_info['file_path'] }}</a>
+        </li>
+        {% endfor %}
+      </ul>
       <div class="d-flex flex-column align-items-center mt-5">
         <h2>Enter Code to View Files:</h2>
         <form method="post" action="{{ url_for('view') }}">
@@ -61,6 +93,7 @@
         </form>
       </div>
     </div>
+    <a class="btn btn-primary mt-3 upload-btn" href="/" role="button">Upload More Files</a>
     <button class="btn btn-primary sort-btn" onclick="sortFiles()">Sort Files</button>
     <div id="countdown" class="countdown"></div>
     <!-- Bootstrap JS -->
@@ -68,35 +101,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
-
-var countdownFontSize = 500; // Change this value to modify the dimension of the countdown text
-
-var isButtonPressed = 0; // Global variable to track button press status
+    var isButtonPressed = 0; // Global variable to track button press status
 
 function sortFiles() {
-  var countdown = document.getElementById('countdown');
-  countdown.style.fontSize = countdownFontSize + 'px';
-  countdown.innerText = '5';
-  var count = 5;
-  var timer = setInterval(function() {
-    count--;
-    countdown.innerText = count.toString();
-    if (count === 0) {
-      clearInterval(timer);
-      countdown.innerText = '';
-      var url = "/view?sort=" + isButtonPressed.toString(); // Construct the URL with the isButtonPressed variable
-      window.location.href = url; // Redirect to the constructed URL
-    }
-  }, 1000);
+  // Disable the button to prevent multiple clicks during the delay
+  var sortBtn = document.querySelector('.sort-btn');
+  sortBtn.disabled = true;
+
+  // Delay for 5 seconds
+  setTimeout(function() {
+    isButtonPressed = 1; // Set the variable to 1 after the delay
+    var url = "/view?sort=" + isButtonPressed.toString(); // Construct the URL with the isButtonPressed variable
+    window.location.href = url; // Redirect to the constructed URL
+  }, 5000);
 }
 
 // Event listener for button press
 var sortBtn = document.querySelector('.sort-btn');
-sortBtn.addEventListener('click', function() {
-  isButtonPressed = 1; // Set the variable to 1 when the button is pressed
-});
-
-
-    </script>
+sortBtn.addEventListener('click', sortFiles);
+</script>
   </body>
 </html>
