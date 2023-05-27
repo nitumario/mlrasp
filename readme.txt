@@ -16,3 +16,9 @@ Logging: https://docs.python.org/3/library/logging.html
 Componente:
 Raspberry PI4 B 4GB RAM
 Accelerator USB Google Coral
+
+Impartirea sarcinilor:
+Nitu Mario:
+Server, ML 
+Grigorescu Vlad:
+BackEnd, FrontEnd
