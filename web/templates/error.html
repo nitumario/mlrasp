@@ -4,22 +4,37 @@
     <title>Error</title>
     <style>
         body {
+            background-color: #000000;
+            color: #FFFFFF;
             font-family: Arial, sans-serif;
             margin: 20px;
         }
         
         h1 {
-            color: #FF0000;
+            color: #FFFFFF;
         }
         
         p {
             margin-bottom: 10px;
         }
+        
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
     </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
+    <a class="btn btn-primary mt-3 back-button" href="/">Back</a>
     <h1>Error</h1>
     <p>An error occurred.</p>
     <p>Error message: {{ error }}</p>
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
