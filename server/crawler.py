@@ -22,7 +22,7 @@ while True:
                 print(f"Difference: {delta.total_seconds() / 3600:.2f} hours")
                 diff = delta.total_seconds() / 3600
                 premium = premium.strip()
-                if diff > 2 and premium =="0":
+                if diff > 6:
                     shutil.rmtree(subdirectory.path)
                     os.system('sudo userdel ' + subdirectory.name)
                     print(f"Deleted outdated directory {subdirectory.name}")

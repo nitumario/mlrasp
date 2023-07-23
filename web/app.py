@@ -1,3 +1,4 @@
+import time
 from flask import Flask, request, render_template, send_file, make_response
 import paramiko
 import os
@@ -11,19 +12,44 @@ import logging
 import traceback
 from stat import S_ISDIR
 
-ip = "192.168.183.116"
+ip = "192.168.1.5"
 db_file = "users.db"  # SQLite database file name
 app = Flask(__name__)
 username = None
 password = None
+con = sqlite3.connect(db_file)
+cursor = con.cursor()
+cursor.execute("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT, code TEXT, uuid TEXT)")
+# Check if 'uuid' column already exists in 'users' table
+cursor.execute("PRAGMA table_info(users)")
+columns = cursor.fetchall()
+if any(column[1] == 'uuid' for column in columns):
+    pass
+else:
+    cursor.execute("ALTER TABLE users ADD COLUMN uuid TEXT")
+con.commit()
+con.close()
+ip_address = "192.168.130.32"  # IP address to send the filenames to
 
 @app.route('/')
 def index():
     return render_template('indexmain.html')
 
+
 @app.route('/upload')
 def upload():
     return render_template('upload.html')
+
+
+# Define a function to cleanup uploaded files from the /web directory
+def cleanup_uploaded_files(filenames):
+    for filename in filenames:
+        file_path = os.path.join(app.root_path, filename)  # Assuming files are saved in the /web directory
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        else:
+            app.logger.warning("File not found: {}".format(file_path))
+
 
 @app.route('/success', methods=['POST'])
 def success():
@@ -35,8 +61,8 @@ def success():
         hostname = socket.gethostname()
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.connect((ip, 9090))  # Connect to server
-
-        header_data = "{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + str(uuid.uuid4()) + "\n}"
+        UUID = str(uuid.uuid4())
+        header_data = "{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + UUID + "\n}"
         with open("header.txt", "w") as datasave:
             datasave.write(header_data)
 
@@ -53,38 +79,61 @@ def success():
             passwd = header.split("PASSWD: ")[1].split("\n")[0].strip()
         os.system("sudo rm header_response.txt")
         os.system("sudo rm header.txt")
-
-        code = str(random.randint(100000, 999999))
-
-        con = sqlite3.connect(db_file)
-        cursor = con.cursor()
-
-        cursor.execute("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT, code TEXT)")
-
-        cursor.execute("INSERT INTO users (username, password, code) VALUES (?, ?, ?)", (usr, passwd, code))
-        con.commit()
-
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(ip, username=usr, password=passwd)
-
+        print('a trecut')
         sftp = ssh.open_sftp()
+        with open("data.nimb", 'w') as d:
+            d.write(UUID + '\n' + dt_string + "\n")
+        with open('data.nimb', 'rb') as miau:
+            sftp.putfo(miau, '/incoming/' + "data.nimb")
+        os.remove('data.nimb')
+        code = str(random.randint(1000000000, 9999999999))
+        con = sqlite3.connect(db_file)
+        cursor = con.cursor()
+        cursor.execute("INSERT INTO users (username, password, code, uuid) VALUES (?, ?, ?, ?)",
+                       (usr, passwd, code, UUID))
+        con.commit()
+
+
+        uploaded_filenames = []  # Initialize a list to store uploaded filenames
 
         for uploaded_file in request.files.getlist('file'):
             filename = uploaded_file.filename
+            uploaded_filenames.append(filename)  # Save the filename to the list
             sftp.putfo(uploaded_file, '/incoming/' + filename)
-
         sftp.close()
         ssh.close()
 
-        con.close()
+        # Call the cleanup function to remove the uploaded files
+        cleanup_uploaded_files(uploaded_filenames)
 
-        return render_template('success.html', code=code)
+        return render_template('success.html', code=code, filenames=uploaded_filenames)
 
     except Exception as e:
+        traceback.print_exc()  # Print traceback information including line number
         app.logger.error('An error occurred: {}'.format(str(e)))
         # Handle the error and return an appropriate response
         return render_template('error.html', message="An error occurred")
+
+def send_filenames(filenames):
+    try:
+        hostname = socket.gethostname()
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.connect((ip_address, 80))  # Connect to the specified IP address
+        time.sleep(1)
+
+        # Format filenames with each name on a different line
+        formatted_filenames = '\n'.join(filenames).encode()
+
+        client_socket.send(formatted_filenames)
+        time.sleep(1)
+        #client_socket.close()
+
+    except Exception as e:
+        app.logger.error('An error occurred while sending filenames: {}'.format(str(e)))
+
 
 @app.route('/view', methods=['GET', 'POST'])
 def view():
@@ -135,7 +184,6 @@ def view():
             os.system("python3 /home/nimbus-pi/mlrasp/server/ml/classify_image.py -f /data/" + username + "/incoming")
             print('finished')
 
-
     except Exception as e:
         app.logger.error('An error occurred: {}'.format(str(e)))
         return render_template('error.html', message="An error occurred")
@@ -173,5 +221,6 @@ def download_file(file_path):
         transport.close()
         ssh.close()
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='192.168.1.5', port=5555, debug=True)

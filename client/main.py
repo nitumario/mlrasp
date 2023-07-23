@@ -13,7 +13,7 @@ print("You are uploading at", dt_string)
 # Get the hostname and create a socket
 hostname = socket.gethostname()
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(("192.168.1.24", 9090))  # Connect to server
+client_socket.connect(("192.168.3.116", 5555))  # Connect to server
 UUID = str(uuid.uuid4())
 # Create the header data and save it to a file
 header_data = "{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + UUID + "\n}"
@@ -45,7 +45,7 @@ with open('data.nimb', 'rb') as miau:
     with paramiko.SSHClient() as ssh:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.load_system_host_keys()
-        ssh.connect("192.168.1.24", username=usr, password=passwd)
+        ssh.connect("192.168.3.116", username=usr, password=passwd)
         sftp = ssh.open_sftp()
         sftp.putfo(miau, '/incoming/' + "data.nimb") 
 os.remove('data.nimb')
