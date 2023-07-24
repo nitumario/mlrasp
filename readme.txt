@@ -16,6 +16,7 @@ Logging: https://docs.python.org/3/library/logging.html
 Componente:
 Raspberry PI4 B 4GB RAM
 Accelerator USB Google Coral
+ESP8266
 
 Impartirea sarcinilor:
 Nitu Mario:
