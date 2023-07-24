@@ -20,7 +20,6 @@ password = None
 con = sqlite3.connect(db_file)
 cursor = con.cursor()
 cursor.execute("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT, code TEXT, uuid TEXT)")
-# Check if 'uuid' column already exists in 'users' table
 cursor.execute("PRAGMA table_info(users)")
 columns = cursor.fetchall()
 if any(column[1] == 'uuid' for column in columns):
@@ -121,12 +120,10 @@ def send_filenames(filenames):
         client_socket.connect((ip_address, 80))  
         time.sleep(1)
 
-        # Format filenames with each name on a different line
         formatted_filenames = '\n'.join(filenames).encode()
 
         client_socket.send(formatted_filenames)
         time.sleep(1)
-        #client_socket.close()
 
     except Exception as e:
         app.logger.error('An error occurred while sending filenames: {}'.format(str(e)))
