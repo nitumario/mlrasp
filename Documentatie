@@ -1,4 +1,0 @@
-Nimbus PI este un proiect axat pe SFTP cu comunicare de tip socket low-level.
-Cand o conexiune este creata, serverul inregistreaza automat utilizatorul in baza de date folosind un user, o parola si un cod(toate generate random) dar si folosind un UUID. 
-Web-site-ul este sustinut de flask, conexiunile la SFTP sunt facute prin modului paramiko care a trebuit modificat deoarece era out-dated
-Acest proiect are si o parte de machine learning care are toate procesele in alta parte fata de server. Ne folosim de un accelerator USB de la Google numit Coral.
