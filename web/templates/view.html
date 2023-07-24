@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Meniu fisiere</title>
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <style>
     body {
@@ -138,7 +137,7 @@
   <div class="container">
     <ul id="fileList">
       {% for file_info in file_info %}
-        {% if file_info['file'] != 'data.nimb' %}  <!-- Exclude 'data.nimb' file from the list -->
+        {% if file_info['file'] != 'data.nimb' %} 
           <li>
             <a href="{{ file_info['file_path'] }}" class="file" data-path="{{ file_info['file_path'] }}">{{ file_info['file'] }}</a>
           </li>
@@ -166,7 +165,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script>
-    var isButtonPressed = 0; // Global variable to track button press status
+    var isButtonPressed = 0;
 
     function sortFiles() {
       // Disable the button to prevent multiple clicks during the delay
