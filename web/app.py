@@ -12,7 +12,7 @@ import logging
 import traceback
 from stat import S_ISDIR
 
-ip = "192.168.1.5"
+ip = "192.168.206.116"
 db_file = "users.db"  # SQLite database file name
 app = Flask(__name__)
 username = None
@@ -223,4 +223,4 @@ def download_file(file_path):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.5', port=5555, debug=True)
+    app.run(host='192.168.206.116', port=80, debug=True)

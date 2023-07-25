@@ -5,26 +5,43 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <style>
+    * {
+      --primary: #00296b;
+      --secondary: #003f88;
+      --third: #00509d;
+      --com-secondary: #ffd500;
+      --com-primary: #fdc500;
+      box-sizing: border-box;
+      font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+      
+    }
+
     body {
-      background-color: #F6F6F6;
+      background-color: #e6e6e6;
       color: #333333;
       font-family: 'Montserrat', sans-serif;
     }
-    .btn-primary {
-      background-color: #FFC300;
+    .btn.btn-primary {
+      /*background-color: #FFC300;
       border-color: #FFC300;
-      color: #333333;
-      transition: background-color 0.3s ease-in-out;
+      color: #333333;*/
+      background-color: var(--primary);
+      color: #ddf;
+      transition: 0.3s ease-in-out all;
       font-family: 'Montserrat', sans-serif;
-      border-radius: 20px;
+      border-radius: 10px;
       padding: 10px 20px;
+      border: none;
+      box-shadow: 0 0 8px 1px rgba(0, 0, 0, .3);
     }
     .btn-primary:hover {
-      background-color: #E6B800;
-      color: #333333;
-      animation-name: pulse;
+      /*background-color: #E6B800;
+      color: #333333;*/
+      background-color: var(--secondary);
+      color: var(--com-secondary);
+      /*animation-name: pulse;
       animation-duration: 1s;
-      animation-iteration-count: infinite;
+      animation-iteration-count: infinite;*/
     }
     .container {
       display: flex;
@@ -34,7 +51,10 @@
       height: 100vh;
       position: relative;
     }
-    .back-button {
+    .square {
+      background: var(--primary);
+    }
+    .btn.back-button {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -46,11 +66,11 @@
       border-radius: 20px;
       padding: 10px 20px;
     }
-    .back-button:hover {
+    .btn.back-button:hover {
       background-color: #000000;
       color: #FFFFFF;
     }
-    .sort-btn {
+    .btn.sort-btn {
       position: fixed;
       bottom: 20px;
       left: 20px;
@@ -63,7 +83,7 @@
       padding: 10px 20px;
       z-index: 999;
     }
-    .sort-btn:hover {
+    .btn.sort-btn:hover {
       background-color: #000000;
       color: #FFFFFF;
     }
@@ -100,27 +120,30 @@
       margin: 0;
       flex-direction: column;
     }
-    .upload-btn {
+    .upload-btnn {
       position: fixed;
       bottom: 80px;
       left: 50%;
       transform: translateX(-50%);
       background-color: #FFC300;
+      background-color: var(--primary);
       border-color: #FFC300;
       color: #333333;
-      transition: background-color 0.3s ease-in-out;
+      transition: 0.3s ease-in-out all;
       font-family: 'Montserrat', sans-serif;
       border-radius: 20px;
       padding: 10px 20px;
       width: 220px;
       text-align: center;
+      animation-name: pulse-upload !important;
     }
-    .upload-btn:hover {
+    .upload-btnn:hover {
       background-color: #E6B800;
+      background-color: var(--secondary);
       color: #333333;
     }
 
-    @keyframes pulse {
+    /*@keyframes pulse {
       0% {
         transform: scale(1);
       }
@@ -131,14 +154,113 @@
         transform: scale(1);
       }
     }
+
+    @keyframes pulse-upload {
+      0% {
+        transform: scale(1) translateX(-55%);
+      }
+      50% {
+        transform: scale(1.1) translateX(-50%);
+      }
+      100% {
+        transform: scale(1) translateX(-55%);
+      }
+    }*/
+
+    body {
+      background: #ccc;
+    }
+
+
+    .square {
+      width: 90%;
+      margin: 30px auto;
+      max-width: 768px;
+      border-radius: 10px;
+      padding: 10px;
+
+    }
+
+    .input-1 {
+      display: block;
+      margin: 30px auto;
+      border-radius: 10px;
+      background: #ddd;
+      font-size: 1.2rem;
+      padding: 3px;
+      outline: none;
+      border: none;
+      box-shadow: 0 0 8px 1px rgba(255, 255, 255, .3);
+      transition: .3s ease all;
+    }
+
+    .input-1:focus {
+      box-shadow: 0 0 8px 1px rgba(255, 255, 255, .6);
+    }
+
+    .white {
+      color: #eee;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .button-1 {
+      border: none;
+      padding: 15px;
+      margin: 20px auto;
+      font-size: 1.2rem;
+      background: var(--com-primary);
+      color: var(--primary);
+      border-radius: 10px;
+      display: block;
+      transition: .3s ease all;
+    }
+
+    .u-list li {
+      list-style: none;
+
+    }
+
+    .u-list li a {
+      text-decoration: none;
+      padding: 10px;
+      background: var(--secondary);
+      margin: 5px;
+      border-radius: 10px;
+      display: block;
+      color: var(--com-primary);
+      transition: .3s ease all;
+      font-size: 1.1rem;
+    }
+
+    .u-list li a:hover {
+      color: var(--com-secondary);
+      background: var(--third);
+    }
+
+    .fixed-button {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-decoration: none;
+    }
+
+    .fixed-button:hover {
+      text-decoration: none;
+      box-shadow: 0 0 8px 1px rgba(0, 0, 0, .1);
+    }
+
   </style>
 </head>
 <body>
-  <a class="btn btn-primary mt-3 back-button" href="/">Inapoi</a>
-  <div class="container">
+  <!--<a class="btn btn-primary mt-3 back-button" href="/">Inapoi</a>
+  <div class="container square">
     <ul id="fileList">
       {% for file_info in file_info %}
-        {% if file_info['file'] != 'data.nimb' %}  <!-- Exclude 'data.nimb' file from the list -->
+        {% if file_info['file'] != 'data.nimb' %}  
           <li>
             <a href="{{ file_info['file_path'] }}" class="file" data-path="{{ file_info['file_path'] }}">{{ file_info['file'] }}</a>
           </li>
@@ -157,10 +279,27 @@
         </div>
       </form>
     </div>
-  </div>
-  <a class="btn btn-primary mt-3 upload-btn" href="/upload" role="button">Introdu mai multe fisiere</a>
+  </div>-->
+  
   <button class="btn btn-primary sort-btn" onclick="sortFiles()">Sorteaza fisierele</button>
-  <div id="countdown" class="countdown"></div>
+<form class="square" method="post" action="{{ url_for('view') }}">
+  <h2 class="white text-center">Introdu codul fisierelor:</h2>
+  <input type="text" class="input-1 text-center" id="code" name="code" required>
+  <input class="button-1" value="Verifica codul" type="submit"/>
+</form>
+
+<ul class="square u-list">
+  {% for file_info in file_info %}
+    {% if file_info['file'] != 'data.nimb' %}
+      <li>
+        <a href="{{ file_info['file_path'] }}" class="file-link" data-path="{{ file_info['file_path'] }}">{{ file_info['file_path'] }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
+
+  <a class="button-1 fixed-button" href="/upload" role="button">Introdu mai multe fisiere</a>
+  <a class="btn btn-primary mt-3 back-button" href="/">Inapoi</a>
   <!-- Bootstrap JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
