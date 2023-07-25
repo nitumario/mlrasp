@@ -2,37 +2,101 @@
 <html>
 <head>
     <title>Eroare!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #000000;
-            color: #FFFFFF;
-            font-family: Arial, sans-serif;
+            background-color: #F6F6F6;
+            color: #333333;
+            font-family: 'Montserrat', sans-serif;
             margin: 20px;
         }
 
         h1 {
-            color: #FFFFFF;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation-name: slide-in;
+            animation-duration: 1s;
+            animation-fill-mode: both;
         }
 
         p {
             margin-bottom: 10px;
+            animation-name: slide-up;
+            animation-duration: 1s;
+            animation-fill-mode: both;
         }
 
         .back-button {
+            background-color: black;
+            color: white;
+            transition: background-color 0.3s ease-in-out;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            padding: 10px;
+            font-size: 1.1rem;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 5%;
+            right: 50%;
+            transform: translate(50%, 50%);
+        }
+
+        .back-button:hover {
+            background-color: #333333;
+        }
+
+        @keyframes slide-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        * {
+            --primary: #00296b;
+            --secondary: #003f88;
+            --third: #00509d;
+            --com-secondary: #ffd500;
+            --com-primary: #fdc500;
+            box-sizing: border-box;
+            font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .content {
+            text-align: center;
         }
     </style>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
     <a class="btn btn-primary mt-3 back-button" href="/">Inapoi</a>
-    <h1>Error</h1>
-    <p>An error occurred.</p>
-    <p>Error message: {{ error }}</p>
-    <!-- Bootstrap JS -->
+    <div class="content">
+        <h1>Eroare!</h1>
+        <p>Pentru mai multe informatii da-ne un mail!</p>
+        <p>Contact: <a href="mailto:server.nimbuspi@gmail.com">server.nimbuspi@gmail.com</a></p>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
