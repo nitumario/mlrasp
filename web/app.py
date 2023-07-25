@@ -13,14 +13,13 @@ import traceback
 from stat import S_ISDIR
 
 ip = "192.168.206.116"
-db_file = "users.db"  # SQLite database file name
+db_file = "users.db"
 app = Flask(__name__)
 username = None
 password = None
 con = sqlite3.connect(db_file)
 cursor = con.cursor()
 cursor.execute("CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT, code TEXT, uuid TEXT)")
-# Check if 'uuid' column already exists in 'users' table
 cursor.execute("PRAGMA table_info(users)")
 columns = cursor.fetchall()
 if any(column[1] == 'uuid' for column in columns):
@@ -29,7 +28,7 @@ else:
     cursor.execute("ALTER TABLE users ADD COLUMN uuid TEXT")
 con.commit()
 con.close()
-ip_address = "192.168.130.32"  # IP address to send the filenames to
+ip_address = "192.168.130.32" 
 
 @app.route('/')
 def index():
@@ -41,10 +40,9 @@ def upload():
     return render_template('upload.html')
 
 
-# Define a function to cleanup uploaded files from the /web directory
 def cleanup_uploaded_files(filenames):
     for filename in filenames:
-        file_path = os.path.join(app.root_path, filename)  # Assuming files are saved in the /web directory
+        file_path = os.path.join(app.root_path, filename) 
         if os.path.exists(file_path):
             os.remove(file_path)
         else:
@@ -60,7 +58,7 @@ def success():
 
         hostname = socket.gethostname()
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect((ip, 9090))  # Connect to server
+        client_socket.connect((ip, 9090))  
         UUID = str(uuid.uuid4())
         header_data = "{ \n" + socket.gethostbyname(hostname) + "\n SCOPE:upload \n" + dt_string + "\n" + UUID + "\n}"
         with open("header.txt", "w") as datasave:
@@ -97,39 +95,35 @@ def success():
         con.commit()
 
 
-        uploaded_filenames = []  # Initialize a list to store uploaded filenames
+        uploaded_filenames = [] 
 
         for uploaded_file in request.files.getlist('file'):
             filename = uploaded_file.filename
-            uploaded_filenames.append(filename)  # Save the filename to the list
+            uploaded_filenames.append(filename) 
             sftp.putfo(uploaded_file, '/incoming/' + filename)
         sftp.close()
         ssh.close()
 
-        # Call the cleanup function to remove the uploaded files
         cleanup_uploaded_files(uploaded_filenames)
 
         return render_template('success.html', code=code, filenames=uploaded_filenames)
 
     except Exception as e:
-        traceback.print_exc()  # Print traceback information including line number
+        traceback.print_exc() 
         app.logger.error('An error occurred: {}'.format(str(e)))
-        # Handle the error and return an appropriate response
         return render_template('error.html', message="An error occurred")
 
 def send_filenames(filenames):
     try:
         hostname = socket.gethostname()
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect((ip_address, 80))  # Connect to the specified IP address
+        client_socket.connect((ip_address, 80))  
         time.sleep(1)
 
-        # Format filenames with each name on a different line
         formatted_filenames = '\n'.join(filenames).encode()
 
         client_socket.send(formatted_filenames)
         time.sleep(1)
-        #client_socket.close()
 
     except Exception as e:
         app.logger.error('An error occurred while sending filenames: {}'.format(str(e)))
@@ -141,7 +135,7 @@ def view():
     cursor = None
     con = None
     ssh = None
-    file_info = []  # Initialize the variable outside the try block
+    file_info = []
     try:
         code = request.form.get('code')
         con = sqlite3.connect(db_file)
