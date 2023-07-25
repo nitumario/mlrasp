@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>Meniu fisiere</title>
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <style>
     * {
@@ -140,30 +139,6 @@
       color: #333333;
     }
 
-    /*@keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    @keyframes pulse-upload {
-      0% {
-        transform: scale(1) translateX(-55%);
-      }
-      50% {
-        transform: scale(1.1) translateX(-50%);
-      }
-      100% {
-        transform: scale(1) translateX(-55%);
-      }
-    }*/
-
     body {
       background: #ccc;
     }
@@ -253,31 +228,6 @@
   </style>
 </head>
 <body>
-  <!--<a class="btn btn-primary mt-3 back-button" href="/">Inapoi</a>
-  <div class="container square">
-    <ul id="fileList">
-      {% for file_info in file_info %}
-        {% if file_info['file'] != 'data.nimb' %}  
-          <li>
-            <a href="{{ file_info['file_path'] }}" class="file" data-path="{{ file_info['file_path'] }}">{{ file_info['file'] }}</a>
-          </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-    <div class="d-flex flex-column align-items-center mt-5">
-      <h2>Introdu codul fisierelor:</h2>
-      <form method="post" action="{{ url_for('view') }}">
-        <div class="form-group">
-          <label for="code"></label>
-          <input type="text" name="code" id="code" required>
-        </div>
-        <div class="d-flex justify-content-center">
-          <input class="btn btn-primary" type="submit" value="Verifica codul">
-        </div>
-      </form>
-    </div>
-  </div>-->
-  
   <button class="btn btn-primary sort-btn" onclick="sortFiles()">Sorteaza fisierele</button>
 <form class="square" method="post" action="{{ url_for('view') }}">
   <h2 class="white text-center">Introdu codul fisierelor:</h2>
@@ -297,27 +247,22 @@
 
   <a class="button-1 fixed-button" href="/upload" role="button">Introdu mai multe fisiere</a>
   <a class="btn btn-primary mt-3 back-button" href="/">Inapoi</a>
-  <!-- Bootstrap JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script>
-    var isButtonPressed = 0; // Global variable to track button press status
+    var isButtonPressed = 0;
 
     function sortFiles() {
-      // Disable the button to prevent multiple clicks during the delay
       var sortBtn = document.querySelector('.sort-btn');
       sortBtn.disabled = true;
 
-      // Delay for 5 seconds
       setTimeout(function () {
-        isButtonPressed = 1; // Set the variable to 1 after the delay
-        var url = "/view?sort=" + isButtonPressed.toString(); // Construct the URL with the isButtonPressed variable
-        window.location.href = url; // Redirect to the constructed URL
+        isButtonPressed = 1;
+        var url = "/view?sort=" + isButtonPressed.toString();
+        window.location.href = url;
       }, 5000);
     }
-
-    // Event listener for button press
     var sortBtn = document.querySelector('.sort-btn');
     sortBtn.addEventListener('click', sortFiles);
   </script>
